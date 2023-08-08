@@ -12,9 +12,9 @@ function Register() {
           <span className="title">Sign up</span>
         </div>
         <form>
-          <input type="text" placeholder="Name" />
-          <input type="email" placeholder="Email" />
-          <input type="password" placeholder="Password" />
+          <input required type="text" placeholder="Name" />
+          <input required type="email" placeholder="Email" />
+          <input required type="password" placeholder="Password" />
           <input type="file" id="file" style={{display:"none"}} />
           <label htmlFor="file">
             <Image src={avatar} alt="file" />

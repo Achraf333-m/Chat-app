@@ -12,8 +12,8 @@ function Login() {
           <span className="title">Log in</span>
         </div>
         <form>
-          <input type="email" placeholder="Email" />
-          <input type="password" placeholder="Password" />
+          <input required type="email" placeholder="Email" />
+          <input required type="password" placeholder="Password" />
           
           <button>Sign in</button>
         </form>
