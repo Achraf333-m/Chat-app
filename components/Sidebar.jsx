@@ -1,3 +1,4 @@
+import Chats from "./Chats";
 import Navbar from "./Navbar";
 import Search from "./Search";
 
@@ -6,6 +7,7 @@ function Sidebar() {
         <div className="sideBar">
             <Navbar/>
             <Search/>
+            <Chats/>
         </div>
     );
 }

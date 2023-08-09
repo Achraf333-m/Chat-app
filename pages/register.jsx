@@ -2,8 +2,20 @@ import "@/styles/globals.scss";
 import Link from "next/link";
 import avatar from "@/public/add.png"
 import Image from "next/image";
+import useAuth from "@/hooks/useAuth";
+import { useForm } from "react-hook-form";
 
 function Register() {
+  const { signUp, error } = useAuth()
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+  const onSubmit = async ({ email, password}) => {
+    await signUp(email, password);
+  };
   return (
     <section className="formContainer">
       <div className="formWrapper">
@@ -11,16 +23,18 @@ function Register() {
           <h1 className="logo">Awesome Chat</h1>
           <span className="title">Sign up</span>
         </div>
-        <form>
-          <input required type="text" placeholder="Name" />
-          <input required type="email" placeholder="Email" />
-          <input required type="password" placeholder="Password" />
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <input type="text" placeholder="Name" {...register("name", { required: true })}/>
+          <input type="email" placeholder="Email" {...register("email", { required: true })}/>
+          {errors.email && <p className="error">Email is incorrect or taken</p>}
+          <input type="password" placeholder="Password" {...register("password", { required: true })} min={6}/>
+          {errors.email && <p className="error">Password is not secure or incorrect</p>}
           <input type="file" id="file" style={{display:"none"}} />
           <label htmlFor="file">
             <Image src={avatar} alt="file" />
             <p>Choose an avatar</p>
           </label>
-          <button>Sign up</button>
+          <button type="submit">Sign up</button>
         </form>
         <div className="logInRedirect">
           <p>Already have an acoount? </p>

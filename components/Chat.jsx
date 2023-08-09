@@ -1,7 +1,13 @@
+import Chatbar from "./Chatbar";
+import Input from "./Input";
+import Messages from "./Messages";
+
 function Chat() {
     return (
         <div className="chat">
-            chat
+            <Chatbar />
+            <Messages />
+            <Input />
         </div>
     );
 }

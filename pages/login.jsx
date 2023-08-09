@@ -1,9 +1,20 @@
 import "@/styles/globals.scss";
 import Link from "next/link";
-import avatar from "@/public/add.png"
-import Image from "next/image";
+import useAuth from "@/hooks/useAuth";
+import { useForm } from "react-hook-form";
 
 function Login() {
+  const { signIn, error } = useAuth();
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+  const onSubmit = async ({ email, password }) => {
+    await signIn(email, password);
+  };
+
   return (
     <section className="formContainer">
       <div className="formWrapper">
@@ -11,10 +22,20 @@ function Login() {
           <h1 className="logo">Awesome Chat</h1>
           <span className="title">Log in</span>
         </div>
-        <form>
-          <input required type="email" placeholder="Email" />
-          <input required type="password" placeholder="Password" />
-          
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <input
+            type="email"
+            placeholder="Email"
+            {...register("email", { required: true })}
+          />
+          {errors.email && <p className="error">Email is wrong</p>}
+          <input
+            type="password"
+            placeholder="Password"
+            {...register("password", { required: true })}
+          />
+          {errors.password && <p className="error">Password is wrong</p>}
+
           <button>Sign in</button>
         </form>
         <div className="logInRedirect">
