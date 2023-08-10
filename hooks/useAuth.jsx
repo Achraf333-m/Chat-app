@@ -31,7 +31,7 @@ export const AuthProvider = ({ children }) => {
   const router = useRouter();
 
   useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
+    const sub = onAuthStateChanged(auth, (user) => {
       if (user) {
         setUser(user);
         setLoading(false);
@@ -40,6 +40,10 @@ export const AuthProvider = ({ children }) => {
         setLoading(true);
         router.push("/login");
       }
+
+      () => {
+        sub()
+      }
       setInitialLoading(false);
     });
   }, [auth]);
@@ -47,32 +51,51 @@ export const AuthProvider = ({ children }) => {
   const addImageAndName = async (email, image, displayName) => {
     const currentUser = auth.currentUser;
 
-    const storageRef = ref(storage, displayName);
-    const uploadTask = uploadBytesResumable(storageRef, image[0]);
     if (currentUser) {
-      uploadTask.on(
-        (error) => {
-          console.log(error.message);
-        },
-        () => {
-          setTimeout(() => {
-            getDownloadURL(uploadTask.snapshot.ref).then(
-              async (downloadURL) => {
-                await updateProfile(currentUser, {
-                  displayName,
-                  photoURL: downloadURL,
-                });
-                await setDoc(doc(db, "users", currentUser.uid), {
-                  displayName,
-                  email,
-                  photoURL: downloadURL,
-                });
+      try {
+        const storageRef = ref(storage, displayName);
+        const uploadTask = uploadBytesResumable(storageRef, image[0]);
+
+        await new Promise((resolve, reject) => {
+          uploadTask.on(
+            "state_changed",
+            (snapshot) => {},
+            (error) => {
+              console.log(error.message);
+              reject(error);
+            },
+            async () => {
+              try {
+                const downloadURL = await getDownloadURL(
+                  uploadTask.snapshot.ref
+                );
+
+                await Promise.all([
+                  updateProfile(currentUser, {
+                    displayName,
+                    photoURL: downloadURL,
+                  }),
+                  setDoc(doc(db, "users", currentUser.uid), {
+                    displayName,
+                    email,
+                    photoURL: downloadURL,
+                  }),
+                ]);
+
+                resolve();
+              } catch (error) {
+                console.error(
+                  "Error updating user profile:",
+                  error.message
+                );
+                reject(error);
               }
-            );
-            console.log(currentUser);
-          }, 6000);
-        }
-      );
+            }
+          );
+        });
+      } catch (error) {
+        console.error("Error during image upload:", error.message);
+      }
     }
   };
 

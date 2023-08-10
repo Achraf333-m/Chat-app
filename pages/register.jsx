@@ -5,19 +5,20 @@ import Image from "next/image";
 import useAuth from "@/hooks/useAuth";
 import { useForm } from "react-hook-form";
 
-
 function Register() {
-  const { signUp, user, addImageAndName } = useAuth();
+  const { signUp, addImageAndName } = useAuth();
 
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const onSubmit = async ({image, displayName, email, password }) => {
+
+  const onSubmit = async ({ image, displayName, email, password }) => {
     await signUp(email, password);
-    await addImageAndName(email, image, displayName)
+    await addImageAndName(email, image, displayName);
   };
+  
   return (
     <section className="formContainer">
       <div className="formWrapper">
