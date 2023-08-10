@@ -4,7 +4,7 @@ import useAuth from "@/hooks/useAuth";
 import { useForm } from "react-hook-form";
 
 function Login() {
-  const { signIn, error } = useAuth();
+  const { signIn } = useAuth();
 
   const {
     register,
@@ -20,7 +20,7 @@ function Login() {
       <div className="formWrapper">
         <div className="formInfo">
           <h1 className="logo">Awesome Chat</h1>
-          <span className="title">Log in</span>
+          <span className="title">Sign in</span>
         </div>
         <form onSubmit={handleSubmit(onSubmit)}>
           <input

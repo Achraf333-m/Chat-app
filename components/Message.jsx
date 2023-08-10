@@ -5,7 +5,7 @@ function Message() {
     return (
         <div className="message ">
             <div className="info">
-                <Image src={profile} />
+                <Image alt="avatar" src={profile} />
                 <span>Just now</span>
             </div>
             <div className="content">
