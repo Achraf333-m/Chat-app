@@ -5,8 +5,8 @@ import "@/styles/globals.scss";
 import { useEffect } from "react";
 
 export default function Home() {
-  const { user } = useAuth()
-  
+  const { user} = useAuth()
+
   if (!user) {
     return null
   }
