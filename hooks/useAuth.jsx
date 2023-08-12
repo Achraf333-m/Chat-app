@@ -15,6 +15,7 @@ import { doc, setDoc } from "firebase/firestore";
 
 const AuthContext = createContext({
   user: null,
+  updatedUser: null,
   addImageAndName: async () => {},
   signIn: async () => {},
   signUp: async () => {},
@@ -27,6 +28,7 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(false);
   const [initialLoading, setInitialLoading] = useState(true);
+  const [updatedUser, setUpdatedUser] = useState(null)
   const [error, setError] = useState(null);
   const router = useRouter();
 
@@ -42,8 +44,8 @@ export const AuthProvider = ({ children }) => {
       }
 
       () => {
-        sub()
-      }
+        sub();
+      };
       setInitialLoading(false);
     });
   }, [auth]);
@@ -81,13 +83,11 @@ export const AuthProvider = ({ children }) => {
                     photoURL: downloadURL,
                   }),
                 ]);
-
                 resolve();
+                setUpdatedUser(currentUser)
+
               } catch (error) {
-                console.error(
-                  "Error updating user profile:",
-                  error.message
-                );
+                console.error("Error updating user profile:", error.message);
                 reject(error);
               }
             }
@@ -137,8 +137,8 @@ export const AuthProvider = ({ children }) => {
   };
 
   const memo = useMemo(
-    () => ({ user, loading, error, addImageAndName, signIn, signUp, logOut }),
-    [user, loading, error, db]
+    () => ({ user, loading, error, updatedUser, addImageAndName, signIn, signUp, logOut }),
+    [user, loading, error, db, updatedUser]
   );
 
   return <AuthContext.Provider value={memo}>{children}</AuthContext.Provider>;
