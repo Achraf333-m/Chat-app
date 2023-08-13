@@ -172,7 +172,6 @@
       padding: 16px 8px;
       border-bottom: 1px solid white;
       .searchForm {
-        border-bottom: 1px solid rgba(255, 255, 255, 0.337);
         margin: 0 12px;
         padding: 0 12px;
         input {
@@ -192,8 +191,14 @@
       align-items: center;
       gap: 10px;
       padding: 16px;
+      cursor: pointer;
       &:hover {
         background-color: #5d5b8d;
+      }
+      img {
+        height: 35px;
+        width: 35px;
+        border-radius: 50%;
       }
       .userInfo {
         span {
@@ -203,6 +208,7 @@
         p {
           font-size: 14px;
           color: lightgray;
+
         }
       }
     }

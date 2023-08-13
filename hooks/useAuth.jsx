@@ -28,7 +28,7 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(false);
   const [initialLoading, setInitialLoading] = useState(true);
-  const [updatedUser, setUpdatedUser] = useState(null)
+  const [updatedUser, setUpdatedUser] = useState(null);
   const [error, setError] = useState(null);
   const router = useRouter();
 
@@ -42,10 +42,6 @@ export const AuthProvider = ({ children }) => {
         setLoading(true);
         router.push("/login");
       }
-
-      () => {
-        sub();
-      };
       setInitialLoading(false);
     });
   }, [auth]);
@@ -78,14 +74,15 @@ export const AuthProvider = ({ children }) => {
                     photoURL: downloadURL,
                   }),
                   setDoc(doc(db, "users", currentUser.uid), {
+                    uid: currentUser.uid,
                     displayName,
                     email,
                     photoURL: downloadURL,
                   }),
+                  setDoc(doc(db, "userChats", currentUser.uid), {}),
                 ]);
                 resolve();
-                setUpdatedUser(currentUser)
-
+                setUpdatedUser(currentUser);
               } catch (error) {
                 console.error("Error updating user profile:", error.message);
                 reject(error);
@@ -137,7 +134,16 @@ export const AuthProvider = ({ children }) => {
   };
 
   const memo = useMemo(
-    () => ({ user, loading, error, updatedUser, addImageAndName, signIn, signUp, logOut }),
+    () => ({
+      user,
+      loading,
+      error,
+      updatedUser,
+      addImageAndName,
+      signIn,
+      signUp,
+      logOut,
+    }),
     [user, loading, error, db, updatedUser]
   );
 

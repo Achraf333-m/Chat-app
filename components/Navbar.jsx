@@ -4,14 +4,14 @@ import useAuth from "@/hooks/useAuth";
 function Navbar() {
   const { logOut, updatedUser, user } = useAuth();
 
-
+  console.log(user, updatedUser)
   return (
     <div className="navBar">
       <h1>Awesome Chat</h1>
       <div className="navInfo">
         {updatedUser || user.displayName ? (<>
-          <img src={updatedUser?.photoURL || user?.photoURL} alt="" />
-          <h3>{updatedUser?.displayName || user?.displayName}</h3>
+          <img src={user?.photoURL || updatedUser?.photoURL} alt="" />
+          <h3>{user?.displayName || updatedUser?.displayName}</h3>
         
         </>) : (<>
         <div className="loadingImg"></div>
