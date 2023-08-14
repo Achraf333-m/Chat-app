@@ -129,16 +129,18 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 12px 24px;
+      height: 50px;
+      padding: 10px 24px;
       background: #5d5b8d;
       h1 {
-        font-size: 18px;
+        font-size: 24px;
+        color: white;
         font-weight: bold;
       }
       .navInfo {
         display: flex;
         align-items: center;
-        gap: 8px;
+        gap: 16px;
         img {
           height: 35px;
           width: 35px;
@@ -146,13 +148,16 @@
           object-fit: cover;
         }
         h3 {
-          font-size: 14px;
+          font-size: 18px;
+          color: white;
         }
         button {
-          padding: 4px 8px;
+          padding: 6px 10px;
           border-radius: 8px;
           border: none;
-          font-size: 12px;
+          font-size: 16px;
+          background-color: black;
+          color: white;
           cursor: pointer;
         }
         .loadingImg {
@@ -180,6 +185,8 @@
           outline: none;
           padding: 4px 0;
           background: transparent;
+          color: white;
+          font-size: 16px;
           &::placeholder {
             color: rgba(255, 255, 255, 0.6);
           }
@@ -190,6 +197,7 @@
       display: flex;
       align-items: center;
       gap: 10px;
+      color: white;
       padding: 16px;
       cursor: pointer;
       &:hover {
@@ -227,6 +235,12 @@
         display: flex;
         gap: 10px;
         align-items: center;
+
+        img {
+          height: 35px;
+          width: 35px;
+          border-radius: 50%;
+        }
       }
 
       .chatIcons {
@@ -247,6 +261,11 @@
         .info {
           display: flex;
           flex-direction: column;
+          img {
+            height: 35px;
+            width: 35px;
+            border-radius: 50%;
+          }
           span {
             font-size: 12px;
           }

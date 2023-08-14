@@ -1,9 +1,12 @@
+import { ChatProvider } from "@/context/ChatContext";
 import { AuthProvider } from "@/hooks/useAuth";
 
 export default function MyApp({ Component, pageProps }) {
   return (
     <AuthProvider>
-      <Component {...pageProps} />
+      <ChatProvider>
+        <Component {...pageProps} />
+      </ChatProvider>
     </AuthProvider>
   );
 }

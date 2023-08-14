@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import {
   collection,
   doc,
@@ -13,12 +13,14 @@ import {
 } from "firebase/firestore";
 import { db } from "@/firebase";
 import useAuth from "@/hooks/useAuth";
+import { ChatContext } from "@/context/ChatContext";
 
 function Search() {
   const [username, setUsername] = useState("");
   const [searchedUser, setSearchedUser] = useState(null);
   const [error, setError] = useState(false);
   const { user, updatedUser } = useAuth();
+  const { dispatch } = useContext(ChatContext)
 
   const handleSearch = async () => {
     const q = query(
@@ -44,12 +46,12 @@ function Search() {
     e.code === "Enter" && handleSearch();
   };
 
-  const handleSelect = async () => {
+  const handleSelect = async (u) => {
+    dispatch({type: "CHANGE_USER", payload: u})
     const combinedId =
       user.uid > searchedUser.uid
         ? user.uid + searchedUser.uid
         : searchedUser.uid + user.uid;
-        console.log(user.uid, searchedUser.uid, combinedId)
     try {
       const res = await getDoc(doc(db, "chats", combinedId));
 
@@ -81,7 +83,6 @@ function Search() {
     setSearchedUser(null)
   };
 
-
   return (
     <div className="search">
       <div className="searchForm">
@@ -95,7 +96,7 @@ function Search() {
       </div>
       {error && <span>No users were found matching that name</span>}
       {searchedUser && (
-        <div className="user" onClick={handleSelect}>
+        <div className="user" onClick={() => handleSelect(searchedUser)}>
           <img src={searchedUser.photoURL} alt="" />
           <div className="userInfo">
             <span>{searchedUser.displayName}</span>

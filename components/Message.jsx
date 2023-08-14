@@ -1,19 +1,28 @@
-import profile from "@/public/img.png";
-import Image from "next/image";
+import { ChatContext } from "@/context/ChatContext";
+import useAuth from "@/hooks/useAuth";
+import { useContext, useEffect, useRef, useState } from "react";
 
-function Message() {
-    return (
-        <div className="message ">
-            <div className="info">
-                <Image alt="avatar" src={profile} />
-                <span>Just now</span>
-            </div>
-            <div className="content">
-                <p>hello</p>
-                <img src="https://images.pexels.com/photos/9241611/pexels-photo-9241611.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load"/>
-            </div>
-        </div>
-    );
+function Message({ message }) {
+  const { user } = useAuth();
+  const { data } = useContext(ChatContext);
+
+  const ref = useRef()
+
+  useEffect(() => {
+    ref.current?.scrollIntoView({behavior: 'smooth'})
+  }, [message])
+  return (
+    <div ref={ref} className={`message ${message.senderId === user.uid && 'owner'}`}>
+      <div className="info">
+        <img alt="avatar" src={message.senderId === user.uid ? user.photoURL : data.user.photoURL} />
+        <span>Just now</span>
+      </div>
+      <div className="content">
+        <p>{message.text}</p>
+        {message.image && <img src={message.image} />}
+      </div>
+    </div>
+  );
 }
 
 export default Message;

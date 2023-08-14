@@ -43,6 +43,10 @@ export const AuthProvider = ({ children }) => {
         router.push("/login");
       }
       setInitialLoading(false);
+
+      return () => {
+        sub()
+      }
     });
   }, [auth]);
 

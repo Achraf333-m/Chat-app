@@ -1,14 +1,16 @@
+import { ChatContext } from "@/context/ChatContext";
 import { db } from "@/firebase";
 import useAuth from "@/hooks/useAuth";
 import profile from "@/public/img.png";
 import { doc, onSnapshot } from "firebase/firestore";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 
 function Chats() {
   const [chats, setChats] = useState(null);
 
   const { user, updatedUser } = useAuth();
+  const { dispatch } = useContext(ChatContext)
 
   useEffect(() => {
     function getChats() {
@@ -24,19 +26,23 @@ function Chats() {
     user.uid && getChats();
   }, [user.uid]);
 
-//  something with the object,entries does not work, chats may be null
-
-    const userChat = Object.entries(chats);
-    console.log(userChat.map((elem) => elem[1].userInfo));
+  if (!chats) {
+    return null
+  }
+  const userChat = Object.entries(chats);
   
+  const handleSelect = (u) => {
+    dispatch({type: "CHANGE_USER", payload: u})
+
+  }
   return (
     <div>
-      {userChat?.map((chat) => (
-        <div className="user" key={chat[0]}>
-          <img src={chat[1].userInfo.photoURL} alt="" />
+      {chats && userChat?.sort((a, b) => b[1].date - a[1].date).map((chat) => (
+        <div className="user" key={chat[0]} onClick={() => handleSelect(chat[1].userInfo)} >
+          <img src={chat[1].userInfo?.photoURL} alt="" />
           <div className="userInfo">
-            <span>{chat[1].userInfo.displayName}</span>
-            <p>Hey there</p>
+            <span>{chat[1].userInfo?.displayName}</span>
+            <p>{chat[1].lastMessage?.text}</p>
           </div>
         </div>
       ))}
