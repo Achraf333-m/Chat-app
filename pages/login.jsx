@@ -2,9 +2,11 @@ import "@/styles/globals.scss";
 import Link from "next/link";
 import useAuth from "@/hooks/useAuth";
 import { useForm } from "react-hook-form";
+import { useState } from "react";
 
 function Login() {
   const { signIn } = useAuth();
+  const [loading, setLoading] = useState(false)
 
   const {
     register,
@@ -13,7 +15,9 @@ function Login() {
   } = useForm();
   
   const onSubmit = async ({ email, password }) => {
+    setLoading(true)
     await signIn(email, password);
+    setLoading(false)
   };
 
   return (
@@ -37,7 +41,7 @@ function Login() {
           />
           {errors.password && <p className="error">Password is wrong</p>}
 
-          <button>Sign in</button>
+          <button>{loading ? 'Please Wait..' : 'Sign up'}</button>
         </form>
         <div className="logInRedirect">
           <p>Don't have an acoount? </p>

@@ -12,7 +12,7 @@ function Navbar() {
       <div className="navInfo">
         {user.displayName ? (<>
           <img src={user?.photoURL} alt="" />
-          <h3>{user?.displayName}</h3>
+          <h3>{user?.displayName.slice(0, 1)}</h3>
         
         </>) : (<>
         <div className="loadingImg"></div>

@@ -4,9 +4,11 @@ import avatar from "@/public/add.png";
 import Image from "next/image";
 import useAuth from "@/hooks/useAuth";
 import { useForm } from "react-hook-form";
+import { useState } from "react";
 
 function Register() {
   const { signUp, addImageAndName } = useAuth();
+  const [loading, setLoading] = useState(false)
 
   const {
     register,
@@ -17,6 +19,7 @@ function Register() {
   const onSubmit = async ({ image, displayName, email, password }) => {
     await signUp(email, password);
     await addImageAndName(email, image, displayName);
+    setLoading(true)
   };
   
   return (
@@ -57,7 +60,7 @@ function Register() {
             <Image src={avatar} alt="file" />
             <p>Choose an avatar</p>
           </label>
-          <button type="submit">Sign up</button>
+          <button type="submit">{loading ? 'Please Wait..' : 'Sign up'}</button>
         </form>
         <div className="logInRedirect">
           <p>Already have an acoount? </p>

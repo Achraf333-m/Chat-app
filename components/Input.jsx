@@ -14,6 +14,8 @@ function Input() {
   const { user } = useAuth();
   const { data } = useContext(ChatContext);
 
+  console.log(data.user)
+
   const handleSubmit = async () => {
     if (image) {
       const storageRef = ref(storage, random());
@@ -75,6 +77,9 @@ function Input() {
 
   return (
     <div className="input">
+      {data.user.displayName ? (<>
+      
+      
       <input
         type="text"
         placeholder="Type a message..."
@@ -95,6 +100,9 @@ function Input() {
         <AiOutlinePaperClip />
         <button onClick={handleSubmit}>Send</button>
       </div>
+      </>) : (<h1 className="noChat">
+        Pick a friend and start talking!
+      </h1>)}
     </div>
   );
 }

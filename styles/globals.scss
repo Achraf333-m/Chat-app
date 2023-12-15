@@ -38,14 +38,14 @@
 }
 
 .formContainer {
-  background: #a7bcff;
+  background: #194519;
   height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
   .formWrapper {
     padding: 24px 60px;
-    background: white;
+    background: rgb(255, 255, 255);
     display: flex;
     flex-direction: column;
     border-radius: 24px;
@@ -58,13 +58,13 @@
       justify-content: center;
       .logo {
         font: bold;
-        color: #5d5b8d;
+        color: #000000;
         font-size: 24px;
       }
       .title {
         font: 500;
         font-size: 18px;
-        color: #5d5b8d;
+        color: #000000;
       }
     }
     form {
@@ -81,7 +81,7 @@
         width: 250px;
         outline: none;
         border: none;
-        border-bottom: 1px solid #a7bcff;
+        border-bottom: 1px solid #000000;
         &::placeholder {
           color: rgb(175, 175, 175);
         }
@@ -106,7 +106,7 @@
         border-radius: 12px;
         border: none;
         cursor: pointer;
-        background: #7b96ec;
+        background: #0c4b25;
         color: white;
         &:hover {
           transform: scale(1.02);
@@ -148,14 +148,14 @@
       width: 20%;
       position: relative;
     }
-    background: #56278f;
+    background: #124d04;
     .navBar {
       display: flex;
       align-items: center;
       justify-content: space-between;
       height: 50px;
       padding: 10px 24px;
-      background: #6f0fde;
+      background: #000000;
       h1 {
         font-size: 24px;
         padding: 12px;
@@ -168,6 +168,7 @@
       .navInfo {
         display: flex;
         align-items: center;
+        justify-content: center;
         gap: 16px;
         img {
           height: 35px;
@@ -240,11 +241,11 @@
       display: flex;
       align-items: center;
       gap: 10px;
-      color: white;
+      color: rgba(255, 255, 255, 0.562);
       padding: 16px;
       cursor: pointer;
       &:hover {
-        background-color: #5d5b8d;
+        background-color: #021c0d;
       }
       img {
         height: 35px;
@@ -274,7 +275,7 @@
       padding: 10px;
       justify-content: space-between;
       align-items: center;
-      background: #9a5ece;
+      background: #11a82f;
 
       .chatProfile {
         display: flex;
@@ -295,7 +296,7 @@
       }
     }
     .messages {
-      background: #ddddf7;
+      background: #00000019;
       padding: 10px;
       height: calc(100% - 180px);
       overflow-y: scroll;
@@ -337,7 +338,7 @@
             display: flex;
             align-items: flex-end;
             p {
-              background-color: #7b96ec;
+              background-color: #55dc96;
               border-radius: 10px 0px 10px 10px;
             }
             img {
@@ -348,7 +349,7 @@
       }
     }
     .input {
-      background: white;
+      background: rgba(255, 255, 255, 0.34);
       height: 50px;
       padding: 20px;
       display: flex;
@@ -369,11 +370,18 @@
         button {
           cursor: pointer;
           padding: 12px;
-          background: #8da4f1;
+          background: #000000;
+          color: white;
           border: none;
           border-radius: 4px;
         }
       }
     }
   }
+}
+
+.noChat {
+  text-align: center;
+  width: 100%;
+  font-size: large;
 }
